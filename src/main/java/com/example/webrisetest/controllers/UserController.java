@@ -67,9 +67,9 @@ public class UserController {
 
     @GetMapping("/{id}/subscriptions")
     public ResponseEntity<Iterable<Subscription>> getSubscriptionByUserId(@PathVariable Long id) {
-        User user = userService.getUserById(id);
-        if (user != null) {
-            return new ResponseEntity<>(user.getSubscriptions(), HttpStatus.OK);
+        Iterable<Subscription> subscriptions = userService.getUserSubscriptions(id);
+        if (subscriptions != null) {
+            return new ResponseEntity<>(subscriptions, HttpStatus.OK);
         } else {
             logger.warn("User not found with ID: {}", id);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
