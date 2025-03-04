@@ -1,6 +1,6 @@
 package com.example.webrisetest.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -41,7 +41,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscription_id")
     )
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Subscription> subscriptions = new HashSet<>();
 
 }

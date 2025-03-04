@@ -45,6 +45,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Iterable<UserDTO>> getAll() {
+        logger.info("Request received for /users");
         Iterable<UserDTO> users = userService.getAllUsers();
         if (users != null && users.iterator().hasNext()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -86,6 +87,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        logger.info("User deleted with ID: {}", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

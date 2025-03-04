@@ -1,9 +1,22 @@
 version: '3.8'
 
 services:
+  webrisetest:
+    ports:
+      - "8080:8080"
+    build: .
+    container_name: webrisetest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/webrisetest_database
+      SPRING_DATASOURCE_USERNAME: webrisetest_user
+      SPRING_DATASOURCE_PASSWORD: webrisetest_password
+
   db:
     image: postgres:15
-    container_name: Webrisetest_postgres_db
+    container_name: postgres_db
     restart: always
     environment:
       POSTGRES_DB: webrisetest_database
@@ -12,21 +25,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  app:
-    build: .
-    container_name: webrisetest_app
-    depends_on:
-      - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/webrisetest_database
-      SPRING_DATASOURCE_USERNAME: webrisetest_user
-      SPRING_DATASOURCE_PASSWORD: webrisetest_password
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: "true"
-    ports:
-      - "8080:8080"
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  pgdata:
+  postgres_data:
